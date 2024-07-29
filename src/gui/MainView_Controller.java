@@ -23,15 +23,15 @@ public class MainView_Controller implements Serializable {
 
 	@SuppressWarnings("exports")
 	@FXML
-    public MenuItem menuItemAbout;
+    private MenuItem menuItemAbout;
 
     @SuppressWarnings("exports")
 	@FXML
-    public MenuItem menuItemDepartment;
+	private MenuItem menuItemDepartment;
 
     @SuppressWarnings("exports")
 	@FXML
-    public MenuItem menuItemSeller;
+	private MenuItem menuItemSeller;
 
     @FXML
     public void onMenuItemAboutAction(@SuppressWarnings("exports") ActionEvent event) {
@@ -40,7 +40,7 @@ public class MainView_Controller implements Serializable {
 
     @FXML
     public void onMenuItemDepartmmentAction(@SuppressWarnings("exports") ActionEvent event) {
-    	System.out.println("onMenuItemDepartmmentAction");
+    	loadView("/gui/DepartmentList.fxml");
     }
 
     @FXML
