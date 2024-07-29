@@ -16,15 +16,13 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			//String caminhoPagina = "C:/Users/Rui%20Pereira/eclipse-workspace/Work_javafx_jdbc/src/gui/MainView.fxml";
-			//FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoPagina));
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/gui/MainView.fxml"));
 			ScrollPane scrollPane = loader.load();
 			scrollPane.setFitToHeight(true);
 			scrollPane.setFitToWidth(true);
 			
-			Scene mainScene = new Scene(scrollPane);			
+			mainScene = new Scene(scrollPane);			
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Sample JavaFX application");
 			primaryStage.show();
