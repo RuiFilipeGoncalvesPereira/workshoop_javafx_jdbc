@@ -46,6 +46,8 @@ public class MainView_Controller implements Serializable {
     @FXML
     public void onMenuItemSellerAction(@SuppressWarnings("exports") ActionEvent event) {
     	System.out.println("onMenuItemSellerAction");
+    	System.out.println("java version: "+System.getProperty("java.version"));
+    	System.out.println("javafx.version: " + System.getProperty("javafx.version"));
     }
     
     public void initialize(URL uri, ResourceBundle rb)
