@@ -4,6 +4,8 @@ module Work_javafx_jdbc {
 	requires javafx.graphics;
 	requires javafx.base;
 	requires java.sql;
+	requires java.desktop;
+	requires java.xml.crypto;
 	
 	opens application to javafx.graphics, javafx.fxml;
 	opens gui to javafx.graphics,  javafx.fxml;
