@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 
 import application.Main;
+import gui.listeners.DataChangedListener;
 import gui.util.Alerts;
 import gui.util.Utils_Java;
 import javafx.collections.FXCollections;
@@ -27,7 +28,7 @@ import javafx.stage.Stage;
 import model.entities.Department;
 import model.services.DepartementService;
 
-public class DepartmentListController implements Initializable
+public class DepartmentListController implements Initializable, DataChangedListener
 {
 	
 	private DepartementService service;
@@ -48,7 +49,7 @@ public class DepartmentListController implements Initializable
 	private ObservableList<Department> obsList;
 	
 	@FXML
-	public void onBtNewaction(ActionEvent event)
+	public void onBtNewaction(@SuppressWarnings("exports") ActionEvent event)
 	{
 		Stage parentStage = Utils_Java.currentStage(event);
 		Department obj = new Department();
@@ -94,6 +95,7 @@ public class DepartmentListController implements Initializable
 			DepartmentFormController controller = loader.getController();
 			controller.setDepartment(obj);
 			controller.setDepartmentService(new DepartementService());
+			controller.subscribeDataChangListener(this);
 			controller.updateFormData();
 			
 			Stage dialogStage = new Stage();
@@ -107,6 +109,13 @@ public class DepartmentListController implements Initializable
 	catch(IOException e) {
 		Alerts.showAlert("IO Exception","Error loading view", e.getMessage(), AlertType.ERROR);
 	 }
+	}
+
+
+	@Override
+	public void onDataChanged() {
+		// TODO Auto-generated method stub
+		updateTableView();
 	}
 }
 

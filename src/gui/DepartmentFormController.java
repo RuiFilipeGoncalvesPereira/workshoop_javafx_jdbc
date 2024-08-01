@@ -1,9 +1,12 @@
 package gui;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import db.DbException;
+import gui.listeners.DataChangedListener;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils_Java;
@@ -22,6 +25,8 @@ public class DepartmentFormController  implements Initializable{
 	 private Department entity;
 	 
 	 private DepartementService service;
+	 
+	 private List<DataChangedListener> dataChangeListeners = new ArrayList<>();
 
 	 @FXML
 	 private TextField txtId;
@@ -48,8 +53,13 @@ public class DepartmentFormController  implements Initializable{
 		 this.service = service;
 	 }
 	 
+	 public void subscribeDataChangListener(@SuppressWarnings("exports") DataChangedListener listener)
+	 {
+		 dataChangeListeners.add(listener);
+	 }
+	 
 	 @FXML
-	 public void onBtSaveAction(ActionEvent event)
+	 public void onBtSaveAction(@SuppressWarnings("exports") ActionEvent event)
 	 {
 		 if(entity == null)
 		 {
@@ -62,6 +72,7 @@ public class DepartmentFormController  implements Initializable{
 		 try {
 			 entity = getFormData();
 			 service.saveOrUpdate(entity);
+			 notifyDataChangeListeners();
 			 Utils_Java.currentStage(event).close();
 		 }
 		 catch(DbException e)
@@ -70,7 +81,15 @@ public class DepartmentFormController  implements Initializable{
 		 }
 	 }
 	 
-	 private Department getFormData() {
+	 private void notifyDataChangeListeners() {
+		// TODO Auto-generated method stub
+		for(DataChangedListener listener : dataChangeListeners)
+		{
+			listener.onDataChanged();
+		}
+	}
+
+	private Department getFormData() {
 		Department obj = new Department();
 		 
 		obj.setId(Utils_Java.tryParseToInt(txtId.getText()));
@@ -80,7 +99,7 @@ public class DepartmentFormController  implements Initializable{
 	}
 
 	@FXML
-	 public void onBtCancelAction(ActionEvent event)
+	 public void onBtCancelAction(@SuppressWarnings("exports") ActionEvent event)
 	 {
 		Utils_Java.currentStage(event).close();
 	 }
