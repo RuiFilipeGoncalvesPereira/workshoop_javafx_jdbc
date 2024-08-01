@@ -10,6 +10,7 @@ import application.Main;
 import gui.listeners.DataChangedListener;
 import gui.util.Alerts;
 import gui.util.Utils_Java;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +26,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.TableCell;
 import model.entities.Department;
 import model.services.DepartementService;
 
@@ -32,6 +34,8 @@ public class DepartmentListController implements Initializable, DataChangedListe
 {
 	
 	private DepartementService service;
+	
+	
 	
 	@FXML
 	private TableView<Department> tableViewDepartment;
@@ -43,10 +47,17 @@ public class DepartmentListController implements Initializable, DataChangedListe
 	private TableColumn<Department, String> tableColumnName;
 	
 	@FXML
+	private TableColumn<Department, Department> tableColumnEDIT;
+	
+	
+	
+	@FXML
 	private Button btNew;
 	
 	@FXML
 	private ObservableList<Department> obsList;
+	
+	
 	
 	@FXML
 	public void onBtNewaction(@SuppressWarnings("exports") ActionEvent event)
@@ -84,6 +95,7 @@ public class DepartmentListController implements Initializable, DataChangedListe
 		List<Department> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewDepartment.setItems(obsList);
+		initEditButtons();
 	}
 	private void createDialogForm(Department obj, String absoluteName, Stage parentStage)
 	{
@@ -116,6 +128,25 @@ public class DepartmentListController implements Initializable, DataChangedListe
 	public void onDataChanged() {
 		// TODO Auto-generated method stub
 		updateTableView();
+	}
+	
+	private void initEditButtons() {
+		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnEDIT.setCellFactory(param -> new TableCell<Department, Department>() {
+			private final Button button = new Button("edit");
+
+			@Override
+			protected void updateItem(Department obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(
+						event -> createDialogForm(obj, "/gui/DepartmentForm.fxml", Utils_Java.currentStage(event)));
+			}
+		});
 	}
 }
 
