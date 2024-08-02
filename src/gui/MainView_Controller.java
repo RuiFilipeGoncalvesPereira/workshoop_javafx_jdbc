@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import model.services.DepartementService;
+import model.services.SellerService;
 
 public class MainView_Controller implements Serializable {
 
@@ -47,9 +48,10 @@ public class MainView_Controller implements Serializable {
 
     @FXML
     public void onMenuItemSellerAction(@SuppressWarnings("exports") ActionEvent event) {
-    	System.out.println("onMenuItemSellerAction");
-    	System.out.println("java version: "+System.getProperty("java.version"));
-    	System.out.println("javafx.version: " + System.getProperty("javafx.version"));
+    	loadView("/gui/SellerList.fxml",(SellerListController controller) -> {	
+    		controller.setSellerService(new SellerService());
+    		controller.updateTableView(); 	
+    	});
     }
     
     public void initialize(URL uri, ResourceBundle rb)
