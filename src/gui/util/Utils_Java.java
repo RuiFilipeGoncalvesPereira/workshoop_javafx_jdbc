@@ -1,6 +1,5 @@
 package gui.util;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,6 +8,7 @@ import java.util.Locale;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import model.entities.Seller;
 import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
@@ -34,14 +34,14 @@ public class Utils_Java {
 		}
 	}
 
-	@SuppressWarnings("exports")
-	public static <T> void formatTableColumnDate(TableColumn<T, Date> tableColumn, String format) {
+	@SuppressWarnings({"hiding" })
+	public static <Seller> void formatTableColumnDate(TableColumn<model.entities.Seller, java.util.Date> tableColumn, String format) {
 		tableColumn.setCellFactory(column -> {
-			TableCell<T, Date> cell = new TableCell<T, Date>() {
+			TableCell<model.entities.Seller, java.util.Date> cell = new TableCell<model.entities.Seller, java.util.Date>() {
 				private SimpleDateFormat sdf = new SimpleDateFormat(format);
 
 				@Override
-				protected void updateItem(Date item, boolean empty) {
+				protected void updateItem(java.util.Date item, boolean empty) {
 					super.updateItem(item, empty);
 					if (empty)
 					{
@@ -74,7 +74,7 @@ public class Utils_Java {
 		});
 	}
 
-	public static void formatDatePicker(DatePicker datePicker, String format) {
+	public static void formatDatePicker(@SuppressWarnings("exports") DatePicker datePicker, String format) {
 		datePicker.setConverter(new StringConverter<LocalDate>() {
 			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(format);
 			{
@@ -100,5 +100,4 @@ public class Utils_Java {
 			}
 		});
 	}
-
 }
