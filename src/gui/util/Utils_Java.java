@@ -33,6 +33,17 @@ public class Utils_Java {
 			return null;
 		}
 	}
+	public static Double tryParseToDouble(String str)
+	{
+		try
+		{
+			return Double.parseDouble(str);
+		}
+		catch (NumberFormatException e)
+		{
+			return null;
+		}
+	}
 
 	@SuppressWarnings({"hiding" })
 	public static <Seller> void formatTableColumnDate(TableColumn<model.entities.Seller, java.util.Date> tableColumn, String format) {
